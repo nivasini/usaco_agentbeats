@@ -1,6 +1,6 @@
 # USACO Green and White Agents
 
-This project contains USACO (USA Computing Olympiad) competitive programming agents that can be tested locally and integrated with the AgentBeats platform.
+This project contains USACO (USA Computing Olympiad) competitive programming agents that can be tested locally and integrated with the AgentBeats platform. For the full expanded dataset (681 problems with all test cases, an expansion from the original 307-question set), download the zip here: https://drive.google.com/file/d/1p0PpWvl-ISXOgXTMomM9R_UAdEH8jqpF/view?usp=drive_link. This repo includes a 40-problem working subset of that larger corpus to keep the checkout manageable; use the link above if you want the complete archive.
 
 ## Project Structure
 
