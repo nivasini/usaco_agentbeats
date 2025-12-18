@@ -1,0 +1,444 @@
+======================================================================
+USACO Local Agent Test - Direct Python Calls
+======================================================================
+
+Step 1: Green agent provides problem statement
+----------------------------------------------------------------------
+Problem 2: Cow Routing [Richard Peng, 2015]
+
+Tired of the cold winter weather on her farm, Bessie the cow plans to
+fly to a warmer destination for vacation.  Unfortunately, she
+discovers that only one airline, Air Bovinia, is willing to sell
+tickets to cows, and that these tickets are somewhat complicated in
+structure.
+
+Air Bovinia owns N planes (1 <= N <= 1000), each of which flies on a
+specific "route" consisting of two or more cities.  For example, one
+plane might fly on a route that starts at city 1, then flies to city
+5, then flies to city 2, and then finally flies to city 8.  No city
+appears multiple times in a route.  If Bessie chooses to utilize a
+route, she can board at any city along the route and then disembark at
+any city later along the route.  She does not need to board at the
+first city or disembark at the last city.  Each route has a certain
+cost, which Bessie must pay if she uses any part of the route,
+irrespective of the number of cities she visits along the route.  If
+Bessie uses a route multiple times during her travel (that is, if she
+leaves the route and later comes back to use it from antoher city),
+she must pay for it each time it is used.
+
+Bessie would like to find the cheapest way to travel from her farm
+(in city A) to her tropical destination (city B). Please help her
+decide what is the minimum cost she must pay, and also the smallest
+number of individual flights she must use take to achieve this minimum
+cost.
+
+INPUT: (file cowroute.in)
+
+The first line of input contains A, B, and N, separated by spaces.  
+
+The next 2N lines describe the available routes, in two lines per
+route. The first line contains the cost of using the route (an integer
+in the range 1..1,000,000,000), and the number of cities along the
+route (an integer in the range 1..100).  The second line contains a
+list of the cities in order along the route.  Each city is identified
+by an integer in the range 1..1000.  Note that the cost of an
+itinerary can easily add up to more than can fit into a 32-bit
+integer, so you should probably use 64-bit integers (e.g., "long long"
+integers in C/C++).
+
+SAMPLE INPUT:
+
+3 4 3
+3 5
+1 2 3 4 5
+2 3
+3 5 4
+1 2
+1 5
+
+OUTPUT: (file cowroute.out)
+
+Output the minimum cost of an itinerary that Bessie can use to travel
+from city A to city B, as well as the minimum number of individual
+flights required to achieve this minimum cost.  If there is no
+solution, output "-1 -1" (quotes for clarity) on a single line.
+
+SAMPLE OUTPUT:
+
+2 2
+----------------------------------------------------------------------
+
+
+Step 2: Green agent provides sample test
+----------------------------------------------------------------------
+Input: 
+Expected Output: 
+----------------------------------------------------------------------
+
+Step 3: White agent generates solution
+----------------------------------------------------------------------
+import sys
+import heapq
+
+input = sys.stdin.read
+data = input().split()
+
+A = int(data[0])
+B = int(data[1])
+N = int(data[2])
+
+routes = []
+index = 3
+for _ in range(N):
+    cost = int(data[index])
+    num_cities = int(data[index + 1])
+    cities = list(map(int, data[index + 2:index + 2 + num_cities]))
+    routes.append((cost, cities))
+    index += 2 + num_cities
+
+# Dijkstra-like approach to find the minimum cost and flights
+INF = float('inf')
+min_cost = {A: 0}
+min_flights = {A: 0}
+pq = [(0, 0, A)]  # (total_cost, total_flights, current_city)
+
+while pq:
+    current_cost, current_flights, current_city = heapq.heappop(pq)
+    
+    if current_city == B:
+        print(current_cost, current_flights)
+        break
+    
+    if current_cost > min_cost.get(current_city, INF):
+        continue
+    
+    for cost, cities in routes:
+        if current_city in cities:
+            start_index = cities.index(current_city)
+            for next_index in range(start_index + 1, len(cities)):
+                next_city = cities[next_index]
+                new_cost = current_cost + cost
+                new_flights = current_flights + 1
+                if new_cost < min_cost.get(next_city, INF) or (new_cost == min_cost.get(next_city, INF) and new_flights < min_flights.get(next_city, INF)):
+                    min_cost[next_city] = new_cost
+                    min_flights[next_city] = new_flights
+                    heapq.heappush(pq, (new_cost, new_flights, next_city))
+
+else:
+    print("-1 -1")
+----------------------------------------------------------------------
+
+Step 4: Green agent evaluates the solution
+----------------------------------------------------------------------
+Verdict: REJECTED
+All tests passed: False
+Summary: total=13, passed=3, failed=10, failures_by_reason={'runtime_error': 1, 'wrong_answer': 9}, failure_ids_by_reason={'runtime_error': ['Sample'], 'wrong_answer': ['test_1', 'test_2', 'test_3', 'test_5', 'test_8', 'test_9', 'test_10', 'test_11', 'test_12']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.068
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: True
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_z2_v8o71/solution.py", line 7, in <module>
+    A = int(data[0])
+            ~~~~^^^
+IndexError: list index out of range
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.052
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 2 2
+    actual_output: 2 1
+  test_2:
+    Passed: False
+    test_name: test_2
+    time_seconds: 0.814
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 72642405 39
+    actual_output: 72642405 2
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.284
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 6699527 21
+    actual_output: 6699527 2
+  test_4:
+    Passed: True
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.045
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 7 3
+    actual_output: 7 2
+  test_6:
+    Passed: True
+  test_7:
+    Passed: True
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 0.055
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 10 14
+    actual_output: 10 1
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 0.057
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 88 3
+    actual_output: 88 1
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 0.111
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 6161849933 58
+    actual_output: 6161849933 9
+  test_11:
+    Passed: False
+    test_name: test_11
+    time_seconds: 0.192
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 95314133 20
+    actual_output: 95314133 2
+  test_12:
+    Passed: False
+    test_name: test_12
+    time_seconds: 0.198
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 23773979 39
+    actual_output: 23773979 2
+----------------------------------------------------------------------
+
+Step 5: Testing with buggy solution
+----------------------------------------------------------------------
+Buggy solution:
+import sys
+# Intentionally incorrect solution for testing
+lines = sys.stdin.read().strip().split("\n")
+T = int(lines[0])
+for _ in range(T):
+    print("0")  # Always wrong
+
+Verdict: REJECTED
+All tests passed: False
+Summary: total=13, passed=0, failed=13, failures_by_reason={'runtime_error': 13}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10', 'test_11', 'test_12']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.068
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: True
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_h1jfvh9y/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: ''
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.062
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_cqt4x9mu/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '3 4 3'
+    expected_output: 2 2
+    actual_output: 
+  test_2:
+    Passed: False
+    test_name: test_2
+    time_seconds: 0.062
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_ji_awvfp/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '270 982 726'
+    expected_output: 72642405 39
+    actual_output: 
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.061
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_h16ra13q/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '339 707 931'
+    expected_output: 6699527 21
+    actual_output: 
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.067
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_bbydsx4g/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '330 832 1000'
+    expected_output: 998993331230 999
+    actual_output: 
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.061
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_50_pqkmx/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '1 2 3'
+    expected_output: 7 3
+    actual_output: 
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.064
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_0cniziy5/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '219 800 4'
+    expected_output: -1 -1
+    actual_output: 
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 0.061
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_h8ccbeif/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '400 589 21'
+    expected_output: -1 -1
+    actual_output: 
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 0.063
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_tzomtx8v/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '141 580 31'
+    expected_output: 10 14
+    actual_output: 
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 0.063
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_zrxfcl20/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '65 408 45'
+    expected_output: 88 3
+    actual_output: 
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 0.069
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_6wth3bw6/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '97 409 178'
+    expected_output: 6161849933 58
+    actual_output: 
+  test_11:
+    Passed: False
+    test_name: test_11
+    time_seconds: 0.063
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_9t0suv9h/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '635 818 251'
+    expected_output: 95314133 20
+    actual_output: 
+  test_12:
+    Passed: False
+    test_name: test_12
+    time_seconds: 0.062
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_mnlpk56w/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '485 630 442'
+    expected_output: 23773979 39
+    actual_output: 
+----------------------------------------------------------------------
+
+======================================================================
+SUMMARY
+======================================================================
+Correct solution: REJECTED
+  -> total=13, passed=3, failed=10, failures_by_reason={'runtime_error': 1, 'wrong_answer': 9}, failure_ids_by_reason={'runtime_error': ['Sample'], 'wrong_answer': ['test_1', 'test_2', 'test_3', 'test_5', 'test_8', 'test_9', 'test_10', 'test_11', 'test_12']}
+Buggy solution: REJECTED
+  -> total=13, passed=0, failed=13, failures_by_reason={'runtime_error': 13}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10', 'test_11', 'test_12']}
+
+This simulates what will happen when the assessment runs on AgentBeats:
+1. Green agent (assessor) provides problem and evaluates solutions
+2. White agent (assessee) attempts to solve the problem
+3. Green agent checks if the solution is correct
+======================================================================

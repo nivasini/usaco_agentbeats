@@ -1,0 +1,386 @@
+======================================================================
+USACO Local Agent Test - Direct Python Calls
+======================================================================
+
+Step 1: Green agent provides problem statement
+----------------------------------------------------------------------
+Problem 2: Flowerpot [Brian Dean, 2012]
+
+Farmer John has been having trouble making his plants grow, and needs your
+help to water them properly.  You are given the locations of N raindrops  
+(1 <= N <= 100,000) in the 2D plane, where y represents vertical height of
+the drop, and x represents its location over a 1D number line:  
+
+
+
+Each drop falls downward (towards the x axis) at a rate of 1 unit per
+second.  You would like to place Farmer John's flowerpot of width W
+somewhere along the x axis so that the difference in time between the
+first raindrop to hit the flowerpot and the last raindrop to hit the
+flowerpot is at least some amount D (so that the flowers in the pot receive
+plenty of water).  A drop of water that lands just on the edge of the
+flowerpot counts as hitting the flowerpot.
+
+Given the value of D and the locations of the N raindrops, please compute
+the minimum possible value of W.
+
+PROBLEM NAME: fpot
+
+INPUT FORMAT:
+
+* Line 1: Two space-separated integers, N and D.  (1 <= D <=
+        1,000,000)
+
+* Lines 2..1+N: Line i+1 contains the space-separated (x,y)
+        coordinates of raindrop i, each value in the range
+        0...1,000,000.
+
+SAMPLE INPUT:
+
+4 5
+6 3
+2 4
+4 10
+12 15
+
+INPUT DETAILS:
+
+There are 4 raindrops, at (6,3), (2,4), (4,10), and (12,15).  Rain must
+fall on the flowerpot for at least 5 units of time.
+
+OUTPUT FORMAT:
+
+* Line 1: A single integer, giving the minimum possible width of the
+        flowerpot.  Output -1 if it is not possible to build a
+        flowerpot wide enough to capture rain for at least D units of
+        time.
+
+SAMPLE OUTPUT:
+
+2
+
+OUTPUT DETAILS:
+
+A flowerpot of width 2 is necessary and sufficient, since if we place it
+from x=4..6, then it captures raindrops #1 and #3, for a total rain
+duration of 10-3 = 7.
+----------------------------------------------------------------------
+
+
+Step 2: Green agent provides sample test
+----------------------------------------------------------------------
+Input: 4 5
+6 3
+2 4
+4 10
+12 15
+Expected Output: 2
+----------------------------------------------------------------------
+
+Step 3: White agent generates solution
+----------------------------------------------------------------------
+import sys
+from collections import defaultdict
+
+input = sys.stdin.read
+data = input().split()
+
+N = int(data[0])
+D = int(data[1])
+
+raindrops = []
+for i in range(N):
+    x = int(data[2 + 2 * i])
+    y = int(data[3 + 2 * i])
+    raindrops.append((x, y))
+
+# Sort raindrops by the time they hit the ground
+raindrops.sort(key=lambda drop: drop[1])
+
+# We will use a sliding window approach to find the minimum width
+min_width = float('inf')
+left = 0
+
+# Dictionary to count the number of raindrops at each x position
+x_count = defaultdict(int)
+
+for right in range(N):
+    x, y = raindrops[right]
+    x_count[x] += 1
+
+    # Check if the current window satisfies the time difference D
+    while raindrops[right][1] - raindrops[left][1] >= D:
+        # Calculate the width of the current window
+        current_width = max(x_count.keys()) - min(x_count.keys())
+        min_width = min(min_width, current_width)
+
+        # Move the left pointer to shrink the window
+        left_x, left_y = raindrops[left]
+        x_count[left_x] -= 1
+        if x_count[left_x] == 0:
+            del x_count[left_x]
+        left += 1
+
+# If min_width is still infinity, it means we couldn't find a valid window
+if min_width == float('inf'):
+    print(-1)
+else:
+    print(min_width)
+----------------------------------------------------------------------
+
+Step 4: Green agent evaluates the solution
+----------------------------------------------------------------------
+Verdict: REJECTED
+All tests passed: False
+Summary: total=11, passed=3, failed=8, failures_by_reason={'time_limit': 3, 'wrong_answer': 5}, failure_ids_by_reason={'time_limit': ['test_2', 'test_9', 'test_10'], 'wrong_answer': ['test_4', 'test_5', 'test_6', 'test_7', 'test_8']}
+
+Test Details:
+  sample_test:
+    Passed: True
+  test_1:
+    Passed: True
+  test_2:
+    Passed: False
+    Error: Time limit exceeded
+    test_name: test_2
+    time_seconds: 4.0
+    time_limit_ok: False
+  test_3:
+    Passed: True
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.045
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 246
+    actual_output: 435
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.049
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 1130
+    actual_output: 2174
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.173
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 3070
+    actual_output: 6094
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 1.418
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 4667
+    actual_output: 9266
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 2.014
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 2527
+    actual_output: 5035
+  test_9:
+    Passed: False
+    Error: Time limit exceeded
+    test_name: test_9
+    time_seconds: 4.0
+    time_limit_ok: False
+  test_10:
+    Passed: False
+    Error: Time limit exceeded
+    test_name: test_10
+    time_seconds: 4.0
+    time_limit_ok: False
+----------------------------------------------------------------------
+
+Step 5: Testing with buggy solution
+----------------------------------------------------------------------
+Buggy solution:
+import sys
+# Intentionally incorrect solution for testing
+lines = sys.stdin.read().strip().split("\n")
+T = int(lines[0])
+for _ in range(T):
+    print("0")  # Always wrong
+
+Verdict: REJECTED
+All tests passed: False
+Summary: total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.074
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_o1_xjl5m/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '4 5'
+    expected_output: 2
+    actual_output: 
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.064
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_m5v47uj1/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '4 5'
+    expected_output: 2
+    actual_output: 
+  test_2:
+    Passed: False
+    test_name: test_2
+    time_seconds: 0.101
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_q881itzd/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '100000 495000'
+    expected_output: 250144
+    actual_output: 
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.067
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_z6_h8rbu/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '30 100'
+    expected_output: -1
+    actual_output: 
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.067
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_mbh7x41h/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '250 400'
+    expected_output: 246
+    actual_output: 
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.072
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_ns56nl5z/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '1000 2000'
+    expected_output: 1130
+    actual_output: 
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.065
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_hm6rhbxs/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '5000 6000'
+    expected_output: 3070
+    actual_output: 
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 0.067
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_rqnea9pc/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '20000 9000'
+    expected_output: 4667
+    actual_output: 
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 0.069
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_avjwovxe/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '40000 5000'
+    expected_output: 2527
+    actual_output: 
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 0.074
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_tuszyfxr/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '60000 10000'
+    expected_output: 5013
+    actual_output: 
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 0.083
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_57027pip/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '80000 99000'
+    expected_output: 50057
+    actual_output: 
+----------------------------------------------------------------------
+
+======================================================================
+SUMMARY
+======================================================================
+Correct solution: REJECTED
+  -> total=11, passed=3, failed=8, failures_by_reason={'time_limit': 3, 'wrong_answer': 5}, failure_ids_by_reason={'time_limit': ['test_2', 'test_9', 'test_10'], 'wrong_answer': ['test_4', 'test_5', 'test_6', 'test_7', 'test_8']}
+Buggy solution: REJECTED
+  -> total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+This simulates what will happen when the assessment runs on AgentBeats:
+1. Green agent (assessor) provides problem and evaluates solutions
+2. White agent (assessee) attempts to solve the problem
+3. Green agent checks if the solution is correct
+======================================================================

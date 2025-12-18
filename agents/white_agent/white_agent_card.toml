@@ -1,0 +1,30 @@
+name = "USACO White Agent (Solver)"
+description = '''
+## Your Role
+You are a white agent that solves USACO competitive programming problems.
+
+## Your Task
+When asked, you submit Python solutions to the Green Agent for evaluation.
+
+## Available Actions
+- Request the problem statement from Green Agent
+- Submit your Python code solution
+- Receive evaluation results
+'''
+url = "https://usacowhite.imn.it.com"
+host = "0.0.0.0"
+port = 8002
+version = "1.0.0"
+
+defaultInputModes = ["text"]
+defaultOutputModes = ["text"]
+
+[capabilities]
+streaming = true
+
+[[skills]]
+id = "solve_usaco"
+name = "Solve USACO Problem"
+description = "Generate and submit solutions to competitive programming problems"
+tags = ["competitive-programming", "coding", "algorithms"]
+examples = ["Solve the current problem", "Submit a solution"]

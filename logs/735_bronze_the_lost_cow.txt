@@ -1,0 +1,297 @@
+======================================================================
+USACO Local Agent Test - Direct Python Calls
+======================================================================
+
+Step 1: Green agent provides problem statement
+----------------------------------------------------------------------
+Farmer John has lost his prize cow Bessie, and he needs to find her!
+
+Fortunately, there is only one long path running across the farm, and Farmer
+John knows that Bessie has to be at some location on this path.  If we think of
+the path as a number line, then Farmer John is currently at position $x$ and
+Bessie is currently at position $y$ (unknown to Farmer John).  If Farmer John
+only knew where Bessie was located, he could walk directly to her, traveling a
+distance of $|x - y|$.  Unfortunately, it is dark outside and Farmer John can't
+see anything.  The only way he can find Bessie is to walk back and forth until
+he eventually reaches her position.
+
+Trying to figure out the best strategy for walking back and forth in his search,
+Farmer John consults the computer science research literature and is
+somewhat amused to find that this exact problem has not only been studied by
+computer scientists in the past, but that it is actually called the "Lost Cow
+Problem" (this is actually true!).
+
+The recommended solution for Farmer John to find Bessie is to move to position
+$x+1$, then reverse direction and move to position $x-2$, then to position
+$x+4$, and so on, in a  "zig zag" pattern, each step moving twice as far from
+his initial starting position as before.  As he has read during his study of algorithms
+for solving the lost cow problem, this approach guarantees that he will at worst
+travel 9 times the direct distance $|x-y|$ between himself and Bessie before he
+finds her (this is also true, and the factor of 9 is actually the smallest such
+worst case guarantee any strategy can achieve).
+
+Farmer John is curious to verify this result.  Given $x$ and $y$, please compute
+the  total distance he will travel according to the zig-zag search strategy above
+until he finds Bessie.
+
+INPUT FORMAT:
+The single line of input contains two distinct space-separated integers $x$ and
+$y$.  Both are in the range $0 \ldots 1,000$.
+
+OUTPUT FORMAT:
+Print one line of output, containing the distance Farmer John will travel to
+reach Bessie.
+
+SAMPLE INPUT:
+3 6
+SAMPLE OUTPUT: 
+9
+
+
+Problem credits: Brian Dean
+----------------------------------------------------------------------
+
+
+Step 2: Green agent provides sample test
+----------------------------------------------------------------------
+Input: 3 6
+Expected Output: 9
+----------------------------------------------------------------------
+
+Step 3: White agent generates solution
+----------------------------------------------------------------------
+import sys
+
+# Read input
+input_data = sys.stdin.read().strip()
+x, y = map(int, input_data.split())
+
+# Initialize variables
+current_position = x
+total_distance = 0
+step_size = 1
+direction = 1  # 1 for right, -1 for left
+
+# Zig-zag search
+while True:
+    next_position = x + direction * step_size
+    if (direction == 1 and current_position <= y < next_position) or (direction == -1 and next_position < y <= current_position):
+        # Bessie is between current_position and next_position
+        total_distance += abs(y - current_position)
+        break
+    else:
+        # Move to next_position
+        total_distance += abs(next_position - current_position)
+        current_position = next_position
+        # Double the step size and reverse direction
+        step_size *= 2
+        direction *= -1
+
+# Output the total distance traveled
+print(total_distance)
+----------------------------------------------------------------------
+
+Step 4: Green agent evaluates the solution
+----------------------------------------------------------------------
+Verdict: ACCEPTED
+All tests passed: True
+Summary: total=11, passed=11, failed=0, failures_by_reason={}, failure_ids_by_reason={}
+
+Test Details:
+  sample_test:
+    Passed: True
+  test_1:
+    Passed: True
+  test_2:
+    Passed: True
+  test_3:
+    Passed: True
+  test_4:
+    Passed: True
+  test_5:
+    Passed: True
+  test_6:
+    Passed: True
+  test_7:
+    Passed: True
+  test_8:
+    Passed: True
+  test_9:
+    Passed: True
+  test_10:
+    Passed: True
+----------------------------------------------------------------------
+
+Step 5: Testing with buggy solution
+----------------------------------------------------------------------
+Buggy solution:
+import sys
+# Intentionally incorrect solution for testing
+lines = sys.stdin.read().strip().split("\n")
+T = int(lines[0])
+for _ in range(T):
+    print("0")  # Always wrong
+
+Verdict: REJECTED
+All tests passed: False
+Summary: total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_pzov767g/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '3 6'
+    expected_output: 9
+    actual_output: 
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_05kzzjsr/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '3 6'
+    expected_output: 9
+    actual_output: 
+  test_2:
+    Passed: False
+    test_name: test_2
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_gxl1str7/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '172 736'
+    expected_output: 2610
+    actual_output: 
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_n2c8a7k2/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '7 5'
+    expected_output: 4
+    actual_output: 
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.056
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_n1289c4z/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '93 35'
+    expected_output: 312
+    actual_output: 
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.055
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_67n1e8tp/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '86 92'
+    expected_output: 36
+    actual_output: 
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.055
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_i6vpfek5/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '49 21'
+    expected_output: 90
+    actual_output: 
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 0.053
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_r3m05ope/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '62 27'
+    expected_output: 289
+    actual_output: 
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval__8bn6erk/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '690 59'
+    expected_output: 4725
+    actual_output: 
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 0.054
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_7qdtby9_/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '763 926'
+    expected_output: 673
+    actual_output: 
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 0.057
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_9n_ns7x9/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '540 426'
+    expected_output: 368
+    actual_output: 
+----------------------------------------------------------------------
+
+======================================================================
+SUMMARY
+======================================================================
+Correct solution: ACCEPTED
+  -> total=11, passed=11, failed=0, failures_by_reason={}, failure_ids_by_reason={}
+Buggy solution: REJECTED
+  -> total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+This simulates what will happen when the assessment runs on AgentBeats:
+1. Green agent (assessor) provides problem and evaluates solutions
+2. White agent (assessee) attempts to solve the problem
+3. Green agent checks if the solution is correct
+======================================================================

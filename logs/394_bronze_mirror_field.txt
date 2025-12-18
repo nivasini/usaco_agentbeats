@@ -1,0 +1,424 @@
+======================================================================
+USACO Local Agent Test - Direct Python Calls
+======================================================================
+
+Step 1: Green agent provides problem statement
+----------------------------------------------------------------------
+Problem 1: Mirror Field [Mark Gordon]
+
+Farmer John has left some old mirrors sitting outside his house, and his
+cows, feeling mischievous as always, have stolen them!  
+
+The cows have set up the mirrors in a rectangular field measuring N by M
+squares (1 <= N, M <= 1,000).  In each square, they have placed a double
+sided mirror between two of its opposite corners.  These two possible
+configurations are represented by the '/' character (a mirror connecting
+the lower-left corner to the upper-right corner) and the '\' character (a
+mirror connecting the upper-left corner to the lower-right corner).
+
+One evening, Bessie the cow brings a laser pointer out to the mirror field.
+Standing outside the field, she shines the beam of light either
+horizontally or vertically along either a row or column of the field,
+causing it to bounce of some number of mirrors.  Since the mirrors are all
+diagonally oriented, a horizontal beam of light that reflects off a mirror
+will end up traveling vertically, and vice versa.  Bessie wonders what is
+the maximum number of mirrors on which her beam of light can be reflected
+at the same time.  Given the layout of the mirror field, please help Bessie
+compute this number.
+
+PROBLEM NAME: mirror
+
+INPUT FORMAT:
+
+* Line 1: The integers N and M, separated by a space.
+
+* Lines 2..1+N: Each line will contain M '/' or '\' characters,
+        describing a row of the mirror field.
+
+SAMPLE INPUT:
+
+3 3
+/\\
+\\\
+/\/
+
+OUTPUT FORMAT:
+
+* Line 1: A single integer indicating the maximum number of times a
+        horizontal or vertical beam originating outside the mirror
+        field could be reflected.  Please output -1 if it could be
+        reflected indefinitely.
+
+SAMPLE OUTPUT:
+
+3
+
+OUTPUT DETAILS:
+
+Bessie can shine the beam downwards above the middle column of her
+field to have it reflected 3 times.
+----------------------------------------------------------------------
+
+
+Step 2: Green agent provides sample test
+----------------------------------------------------------------------
+Input: 3 3
+/\\
+\\\
+/\/
+Expected Output: 3
+----------------------------------------------------------------------
+
+Step 3: White agent generates solution
+----------------------------------------------------------------------
+import sys
+from collections import deque
+
+input = sys.stdin.read
+data = input().split()
+
+N = int(data[0])
+M = int(data[1])
+grid = data[2:]
+
+# Directions: right, down, left, up
+# Each direction has a pair of (dx, dy)
+directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+# Reflections based on mirror type and incoming direction
+# '/' mirror: 0 <-> 3, 1 <-> 2
+# '\' mirror: 0 <-> 1, 2 <-> 3
+mirror_reflection = {
+    '/': [3, 2, 1, 0],
+    '\\': [1, 0, 3, 2]
+}
+
+def bfs(start_x, start_y, start_dir):
+    queue = deque([(start_x, start_y, start_dir, 0)])
+    visited = set()
+    
+    while queue:
+        x, y, dir, reflections = queue.popleft()
+        
+        if (x, y, dir) in visited:
+            return -1  # Infinite loop detected
+        visited.add((x, y, dir))
+        
+        # Move in the current direction
+        nx, ny = x + directions[dir][0], y + directions[dir][1]
+        
+        if 0 <= nx < N and 0 <= ny < M:
+            # Reflect based on the mirror at the new position
+            mirror = grid[nx][ny]
+            new_dir = mirror_reflection[mirror][dir]
+            queue.append((nx, ny, new_dir, reflections + 1))
+        else:
+            # If out of bounds, return the number of reflections
+            return reflections
+
+max_reflections = 0
+
+# Check all possible starting points and directions
+for i in range(N):
+    # From left (direction 0)
+    max_reflections = max(max_reflections, bfs(i, 0, 0))
+    # From right (direction 2)
+    max_reflections = max(max_reflections, bfs(i, M - 1, 2))
+
+for j in range(M):
+    # From top (direction 1)
+    max_reflections = max(max_reflections, bfs(0, j, 1))
+    # From bottom (direction 3)
+    max_reflections = max(max_reflections, bfs(N - 1, j, 3))
+
+print(max_reflections)
+----------------------------------------------------------------------
+
+Step 4: Green agent evaluates the solution
+----------------------------------------------------------------------
+Verdict: REJECTED
+All tests passed: False
+Summary: total=11, passed=0, failed=11, failures_by_reason={'wrong_answer': 10, 'time_limit': 1}, failure_ids_by_reason={'wrong_answer': ['Sample', 'test_1', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10'], 'time_limit': ['test_2']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.049
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 3
+    actual_output: 1
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.048
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 3
+    actual_output: 1
+  test_2:
+    Passed: False
+    Error: Time limit exceeded
+    test_name: test_2
+    time_seconds: 4.0
+    time_limit_ok: False
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.051
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 45
+    actual_output: 43
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.05
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 158
+    actual_output: 156
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.061
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 2659
+    actual_output: 2657
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.181
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 1580
+    actual_output: 1578
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 1.076
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 64330
+    actual_output: 64328
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 1.284
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 90659
+    actual_output: 90657
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 1.323
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 176320
+    actual_output: 176318
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 1.363
+    time_limit_ok: True
+    exit_code_ok: True
+    output_matches: False
+    stderr: None
+    expected_output: 88976
+    actual_output: 88974
+----------------------------------------------------------------------
+
+Step 5: Testing with buggy solution
+----------------------------------------------------------------------
+Buggy solution:
+import sys
+# Intentionally incorrect solution for testing
+lines = sys.stdin.read().strip().split("\n")
+T = int(lines[0])
+for _ in range(T):
+    print("0")  # Always wrong
+
+Verdict: REJECTED
+All tests passed: False
+Summary: total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+Test Details:
+  sample_test:
+    Passed: False
+    test_name: Sample
+    time_seconds: 0.07
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_o3c2x4zc/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '3 3'
+    expected_output: 3
+    actual_output: 
+  test_1:
+    Passed: False
+    test_name: test_1
+    time_seconds: 0.068
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval__4o4xi3l/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '3 3'
+    expected_output: 3
+    actual_output: 
+  test_2:
+    Passed: False
+    test_name: test_2
+    time_seconds: 0.086
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_4i7jeqfc/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '1000 1000'
+    expected_output: 835813
+    actual_output: 
+  test_3:
+    Passed: False
+    test_name: test_3
+    time_seconds: 0.069
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_71isme5h/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '10 10'
+    expected_output: 45
+    actual_output: 
+  test_4:
+    Passed: False
+    test_name: test_4
+    time_seconds: 0.068
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_ai295o0f/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '13 123'
+    expected_output: 158
+    actual_output: 
+  test_5:
+    Passed: False
+    test_name: test_5
+    time_seconds: 0.07
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_5m5317hp/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '100 100'
+    expected_output: 2659
+    actual_output: 
+  test_6:
+    Passed: False
+    test_name: test_6
+    time_seconds: 0.068
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_glwthujo/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '100 1000'
+    expected_output: 1580
+    actual_output: 
+  test_7:
+    Passed: False
+    test_name: test_7
+    time_seconds: 0.077
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_2ho3pkx3/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '800 800'
+    expected_output: 64330
+    actual_output: 
+  test_8:
+    Passed: False
+    test_name: test_8
+    time_seconds: 0.077
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_7qspgdnc/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '900 870'
+    expected_output: 90659
+    actual_output: 
+  test_9:
+    Passed: False
+    test_name: test_9
+    time_seconds: 0.082
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_v8kbdnoo/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '1000 1000'
+    expected_output: 176320
+    actual_output: 
+  test_10:
+    Passed: False
+    test_name: test_10
+    time_seconds: 0.089
+    time_limit_ok: True
+    exit_code_ok: False
+    output_matches: False
+    stderr: Traceback (most recent call last):
+  File "/var/folders/zf/2_fsvhvd429d63tlvkktnj4r0000gp/T/usaco_eval_ktnc5el6/solution.py", line 4, in <module>
+    T = int(lines[0])
+ValueError: invalid literal for int() with base 10: '1000 1000'
+    expected_output: 88976
+    actual_output: 
+----------------------------------------------------------------------
+
+======================================================================
+SUMMARY
+======================================================================
+Correct solution: REJECTED
+  -> total=11, passed=0, failed=11, failures_by_reason={'wrong_answer': 10, 'time_limit': 1}, failure_ids_by_reason={'wrong_answer': ['Sample', 'test_1', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10'], 'time_limit': ['test_2']}
+Buggy solution: REJECTED
+  -> total=11, passed=0, failed=11, failures_by_reason={'runtime_error': 11}, failure_ids_by_reason={'runtime_error': ['Sample', 'test_1', 'test_2', 'test_3', 'test_4', 'test_5', 'test_6', 'test_7', 'test_8', 'test_9', 'test_10']}
+
+This simulates what will happen when the assessment runs on AgentBeats:
+1. Green agent (assessor) provides problem and evaluates solutions
+2. White agent (assessee) attempts to solve the problem
+3. Green agent checks if the solution is correct
+======================================================================

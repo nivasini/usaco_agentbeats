@@ -1,0 +1,12 @@
+[project]
+name = "usaco-green-agent"
+version = "1.0.0"
+description = "USACO Competitive Programming Evaluator - Green Agent for AgentBeats"
+requires-python = ">=3.11"
+dependencies = [
+    "agentbeats>=0.3.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

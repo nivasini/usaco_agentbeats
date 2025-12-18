@@ -1,0 +1,637 @@
+90
+13 14
+.aa.aa........
+aaa..a........
+aaaa.a........
+aaaaaaaa......
+aaaaaaaa......
+aaaaaaaa..aaaa
+aaaaaaaaaaaaaa
+aa..aa.aa.aaaa
+aaa..aaaaaaaaa
+aa...aaaaaaaaa
+a......aaa.aa.
+.......aaa.a..
+.........a....
+1 1
+a
+11 6
+.aa.aa
+aaa..a
+aaaa.a
+aaaaaa
+aaaaaa
+aa....
+aa....
+aa....
+aaa...
+aa....
+a.....
+1 1
+a
+2 2
+aa
+aa
+3 6
+....aa
+aaaaaa
+aaaaa.
+1 1
+a
+11 8
+..aa.aa.
+..a..aaa
+..a.aaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+......aa
+.....aaa
+......aa
+.......a
+8 5
+....a
+..a.a
+.aa.a
+aaaaa
+aaaa.
+aaaa.
+aaaaa
+aaaa.
+12 11
+........aa.
+........aaa
+.....a.aaaa
+...aaaaaaaa
+...aaaaaaaa
+...aaaaaaaa
+..aaaaaaaaa
+..aa.aa..aa
+.aaaaa...aa
+aaaaaa....a
+.aaa......a
+.aaa.......
+5 6
+.aaaaa
+.aaaa.
+aaaaa.
+.aa...
+..a...
+2 1
+a
+a
+11 4
+.aa.
+.aaa
+aaaa
+.aaa
+aaaa
+aaaa
+.aaa
+..aa
+.aaa
+..aa
+...a
+5 10
+...aaaa...
+a..aaaa...
+aaaaaaaaaa
+..aaaaa..a
+...aaaaa..
+6 9
+.......a.
+...aaaaa.
+...aaaa..
+aaaaaaaaa
+a..aaaaa.
+..aaa....
+1 1
+a
+1 1
+a
+8 7
+...a...
+.aaa...
+.aaaaaa
+...aa..
+...a...
+..aa.a.
+.aaaaa.
+aaaaaa.
+8 7
+.a..aa.
+aaaaaaa
+aaaaa..
+.aaaa..
+.aaaa..
+..a....
+..a....
+.aa....
+11 8
+a.......
+aa......
+aaa.....
+aa..aa..
+aaaaaa..
+aaaaaaaa
+....aaaa
+....aaaa
+.....a..
+.....a..
+....aa..
+11 4
+...a
+..aa
+.aaa
+..aa
+.aaa
+.aaa
+aaaa
+aaaa
+aaaa
+.aaa
+.aa.
+1 1
+a
+11 12
+......aa....
+......a.....
+......a.aa..
+....aaaaaa..
+....aaaaaa..
+....aaaaaa..
+aaaaaaaaaaaa
+...aa.aa..aa
+....aaa..aaa
+.....aa...aa
+...........a
+4 7
+..aaaaa
+aaaaaaa
+.aaaaaa
+..aaaaa
+9 8
+...aaaaa
+..aaaaaa
+.aaaaaaa
+...aaaaa
+aaaaa...
+.aaaa...
+.aaaa...
+...aa...
+...aaa..
+10 6
+...a..
+.aaaa.
+.aa.a.
+aaaaa.
+...aa.
+....a.
+....aa
+...aaa
+...aaa
+...aaa
+4 7
+...aa..
+.a.aa..
+.aaaaa.
+aaaaaaa
+1 1
+a
+1 1
+a
+7 7
+...a...
+aaaa...
+aaaaaaa
+aa.aaa.
+aaaaaa.
+..aaa..
+...a...
+1 1
+a
+1 1
+a
+9 8
+.....aa.
+.....aa.
+...aaaa.
+...aaaaa
+..aa.aa.
+aaaaaaa.
+aaaaaa..
+....aa..
+....aa..
+6 11
+.aaaaaaaaaa
+aaaaaaaaaa.
+aaaaaaa.a..
+..aaaaa....
+a..aaaaa...
+aaaaaaaaa..
+1 1
+a
+6 1
+a
+a
+a
+a
+a
+a
+7 10
+.aa.aa....
+aaa..a....
+aaaa.a....
+.aaaaaaa..
+.aaaaaaa..
+.aaaaaaa..
+.aaaaaaaaa
+10 8
+..a.....
+aaaaa...
+...aa...
+...aaaa.
+.aaaaaa.
+.a.aaaaa
+aaaaa...
+aaaaaaa.
+aaaaaa..
+aaaaa...
+8 7
+...aaaa
+.....aa
+...aaaa
+.aaaaaa
+aaaaaaa
+aaa.aa.
+aaa.a..
+..a....
+10 8
+.....a..
+...aaa..
+...aa...
+.aaaaa..
+.aaaaa..
+aaaaa...
+...aaaaa
+.aaaaaaa
+..aaaaaa
+...aaaaa
+8 10
+.....a....
+...aaa....
+...aaa....
+.aaaaa...a
+.aaaaaaaaa
+aa.aa.aaaa
+....aaaaaa
+......aaaa
+12 7
+.....a.
+.....a.
+...aaa.
+...aaa.
+..aa.aa
+aaaaaaa
+aaaaaa.
+aaaaaa.
+.aaaaa.
+.a.a...
+...a...
+..aa...
+8 8
+aaaa....
+aaaaaa..
+aaaa.a..
+aaaaaa..
+aaaaaaaa
+.aa.aaa.
+..a.aaa.
+....a...
+8 11
+......aa...
+....aaaa...
+...aaaaaaaa
+...aaaaa..a
+....aaaaa..
+..a.aaaaaaa
+.aaaaaaaaaa
+aaaaaaaaaa.
+2 3
+aaa
+aa.
+6 7
+...a...
+.aaaaaa
+.aaaaaa
+.aa.aa.
+aaa.a..
+..a....
+8 6
+..aaaa
+.aaaaa
+..aaaa
+aaaaaa
+aaaaaa
+aa.aa.
+aa.a..
+.a....
+11 3
+..a
+.aa
+aaa
+.aa
+.aa
+.aa
+.aa
+aaa
+aaa
+aaa
+aa.
+3 11
+aaaaaaa.a..
+aaaaaaaaaa.
+.aaaaaaaaaa
+4 5
+aaa..
+aaaaa
+aaaaa
+aaaa.
+9 8
+.....a..
+.....aa.
+....aaaa
+....aaaa
+..a.aaaa
+aaaaaaaa
+aa..aaaa
+aa......
+aa......
+9 8
+...a....
+...aa...
+.aaaa...
+.aaaa.a.
+aaaaa.a.
+...aaaaa
+.aaaaaaa
+..aaaaaa
+...aaaaa
+7 11
+...a.......
+aaaa.......
+a..aa......
+..aaaa.....
+aaaaaaa.a..
+aaaaaaaaaa.
+.aaaaaaaaaa
+1 1
+a
+1 1
+a
+8 8
+....a...
+.aaaaa..
+.aaaaaa.
+aaaaa.a.
+...aaaaa
+.aaaaaaa
+..aaaaaa
+...aaaaa
+4 7
+....a..
+...aaaa
+.aaaaaa
+aaaaaa.
+8 9
+aaaa.....
+aaaaaaaa.
+aaaa.aa..
+aaaaaaaaa
+aaaaaaaaa
+.aa.aaa..
+..a.aaa..
+....a....
+4 10
+.....aaa..
+.....a....
+....aaa...
+aaaaaaaaaa
+4 11
+....aa.....
+..a.aa..aaa
+.aaaaaaaaaa
+aaaaaaaaaa.
+1 1
+a
+4 11
+.aaaaaaaaaa
+aaaaaaaaaa.
+aaa.....a..
+..a........
+6 13
+..........aaa
+......aaaaaa.
+...aaaaaaaaa.
+...aaaa......
+aaaa.........
+a..a.........
+8 13
+...aa........
+..aaa........
+a..aaaaa.....
+aaaaaaaaaa...
+...aaaa.aa...
+...aaaaaaaaa.
+......aaaaaa.
+......a.aaaaa
+3 4
+..a.
+aaaa
+a...
+2 2
+aa
+.a
+8 6
+....a.
+..a.a.
+.aa.aa
+aaaaaa
+aaa...
+aaa...
+aaa...
+aaa...
+8 7
+....a..
+..a.aaa
+.aa.aaa
+aaaaa..
+aaaaa..
+aaaa...
+aaaa...
+aaaa...
+8 3
+a..
+aa.
+aaa
+aa.
+a..
+a..
+a..
+a..
+5 4
+aaaa
+aaaa
+aaaa
+aaaa
+a.a.
+8 11
+..aaaaaaaaa
+..aaaaaaaa.
+..aaaaa.a..
+..aaaaa....
+a..aaaa....
+aaaaa......
+...aaaa....
+...aaaaa...
+1 1
+a
+8 11
+aaaaaaaaaa.
+.aaaaaaaaaa
+..a.aaaaaaa
+....aaaaa..
+....aaaa..a
+.....aaaaaa
+.....aaa...
+.....aaa...
+8 12
+.....aa.....
+....aaaaa..a
+..aaaaaaaaaa
+..aa.aaaa...
+aaaaaaaaa...
+a..aaa......
+...a.a......
+...aaaa.....
+10 8
+..aa....
+...a....
+...a....
+aaaaaa..
+aaaaaa..
+aaaaaa..
+aaaaaaaa
+..aa....
+...aa...
+...aa...
+3 3
+..a
+aaa
+.aa
+1 1
+a
+10 5
+.aa..
+..a..
+..a..
+aaaaa
+.aaaa
+.aaaa
+aaaaa
+.aa.a
+..aaa
+..a..
+8 7
+..a....
+aaa.a..
+aaa.aa.
+aaaaaaa
+aaaaaaa
+aa.aaaa
+...aaaa
+...aaaa
+11 4
+.aa.
+.aaa
+aaaa
+aaaa
+aaaa
+.aaa
+.aaa
+..aa
+.aaa
+..aa
+...a
+8 11
+aaaa.......
+.aaaa......
+..a.aaa....
+....aaaa...
+....aaaa..a
+....aaaaaaa
+....aaaa...
+....aaaa...
+1 1
+a
+7 5
+..a..
+..aa.
+aaaaa
+aaaaa
+.aaaa
+aaaaa
+.aaaa
+1 1
+a
+8 10
+......aaaa
+....aaaaaa
+aa.aa.aaaa
+.aaaaaaaaa
+.aaaaaaaaa
+...aaa.aa.
+...aaa.a..
+.....a....
+14 13
+.........a...
+........aaa..
+.........aaa.
+.........a...
+.........aaaa
+.........aaa.
+...aaaa..aaa.
+...aaaa.aa...
+aaaaaaaaaa...
+...aaaaa.....
+...aaaa......
+..aaaa.......
+..aaaaaaaa...
+.aaaaaaaaaa..
+8 9
+......a..
+.....aa..
+.....aa..
+.....aaaa
+aaaaaaaaa
+.aa.aaa..
+..a.aaa..
+....a....
+1 1
+a
+1 1
+a
+7 11
+aaaaaaaaaa.
+.aaaaaaaaaa
+..a.aaaaaaa
+....aaaaa..
+...aaaa....
+.aaaaaa....
+.aa........
+4 11
+aaaaaaaaaa.
+.aaaaaaaaaa
+..a.aaaaaaa
+....aa.....
