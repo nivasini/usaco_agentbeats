@@ -1,4 +1,4 @@
-# USACO Agent Testing & AgentBeats Integration
+# USACO Green and White Agents
 
 This project contains USACO (USA Computing Olympiad) competitive programming agents that can be tested locally and integrated with the AgentBeats platform.
 
